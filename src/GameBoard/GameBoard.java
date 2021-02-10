@@ -62,7 +62,12 @@ public class GameBoard extends JFrame implements MouseListener {
                     this.clickedTile.setColor(Color.decode("#FFFF99"));
                     repaint();
                 }
+                if (this.clickedTile.getColor().equals(Color.decode("#82E0AA"))) {
+                    this.gameOver();
+                }
             }
+        }else{
+            Modal.showMessage(this, "Излизате извън границите на дъската! Изберете ново поле!");
         }
     }
 
@@ -96,11 +101,22 @@ public class GameBoard extends JFrame implements MouseListener {
         if(randomNumber == 0 || randomNumber == 1){
             this.boardTiles[row][col] = new DangerTile(row, col);
             repaint();
+            Modal.showMessage(this,"Непроходима територия! Трябва да заобиколите!");
         }else {
             this.boardTiles[row][col] = new StartTile(row, col,"");
             repaint();
         }
         this.clickedTile = null;
+    }
+
+    /**
+     * Метод, който визуализира модален прозорец за край на играта,
+     * когато потребителят достигне до едно от зелените полета, върху което се намира Баба Яга.
+     */
+    private void gameOver(){
+        if (this.clickedTile.getId().equals("Баба Яга")) {
+            Modal.showEndOfTheGameMessage(this, "Край на играта!", "Намерихте Баба Яга!");
+        }
     }
 
     /**
